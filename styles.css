@@ -89,19 +89,14 @@ img {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
-  font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  flex-shrink: 0;
 }
 
-.brand-mark {
-  width: 14px;
-  height: 14px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--cyan), #196fff);
-  box-shadow: 0 0 26px rgba(139, 232, 255, 0.42);
+.brand-logo {
+  width: auto;
+  height: 38px;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.24));
 }
 
 .topnav {
@@ -109,6 +104,7 @@ img {
   gap: 28px;
   color: var(--text-soft);
   font-size: 0.96rem;
+  letter-spacing: 0.015em;
 }
 
 .topnav a:hover,
@@ -126,6 +122,7 @@ img {
   border-radius: 999px;
   font: inherit;
   font-weight: 700;
+  letter-spacing: 0.015em;
   color: #03101d;
   background: linear-gradient(135deg, #98efff, #d8ffed);
   box-shadow: 0 16px 38px rgba(139, 232, 255, 0.22);
@@ -178,7 +175,7 @@ img {
   font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
   font-size: clamp(3.2rem, 6vw, 6.6rem);
   line-height: 0.95;
-  letter-spacing: -0.06em;
+  letter-spacing: -0.04em;
 }
 
 .hero-body,
@@ -189,7 +186,8 @@ img {
   margin: 24px 0 0;
   color: var(--text-soft);
   font-size: 1.08rem;
-  line-height: 1.65;
+  line-height: 1.72;
+  letter-spacing: 0.012em;
 }
 
 .glass-card,
@@ -264,7 +262,8 @@ img {
 .form-status {
   margin: 12px 0 0;
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.55;
+  letter-spacing: 0.01em;
 }
 
 .form-meta {
@@ -309,14 +308,15 @@ img {
   font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
   font-size: 1.5rem;
   font-weight: 700;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.015em;
 }
 
 .metric-label {
   display: block;
   margin-top: 10px;
   color: var(--text-soft);
-  line-height: 1.45;
+  line-height: 1.52;
+  letter-spacing: 0.01em;
 }
 
 .hero-visual {
@@ -390,13 +390,15 @@ img {
   display: block;
   font-size: 1.3rem;
   line-height: 1.15;
+  letter-spacing: -0.01em;
 }
 
 .floating-card span:last-child {
   display: block;
   margin-top: 8px;
   color: var(--text-soft);
-  line-height: 1.45;
+  line-height: 1.52;
+  letter-spacing: 0.01em;
 }
 
 .story-strip,
@@ -425,6 +427,7 @@ img {
 .cta-band h2 {
   font-size: clamp(2.1rem, 4vw, 3.5rem);
   line-height: 1.02;
+  letter-spacing: -0.025em;
 }
 
 .mini-route {
@@ -455,7 +458,8 @@ img {
 .itinerary-card p {
   margin: 14px 0 0;
   color: var(--text-soft);
-  line-height: 1.55;
+  line-height: 1.62;
+  letter-spacing: 0.01em;
 }
 
 .feature-grid {
@@ -480,13 +484,14 @@ img {
   margin: 20px 0 12px;
   font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
   font-size: 1.55rem;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.015em;
 }
 
 .feature-card p {
   margin: 0;
   color: var(--text-soft);
-  line-height: 1.6;
+  line-height: 1.68;
+  letter-spacing: 0.01em;
 }
 
 .preview-section {
@@ -498,7 +503,8 @@ img {
   margin: 24px 0 0;
   padding-left: 20px;
   color: var(--text-soft);
-  line-height: 1.9;
+  line-height: 1.95;
+  letter-spacing: 0.01em;
 }
 
 .preview-frame {
@@ -529,7 +535,7 @@ img {
   margin: 0;
   font-size: 1rem;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.005em;
 }
 
 .faq-card p:last-child {
