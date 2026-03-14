@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jetstream | Travel prices, forecasted beautifully</title>
+    <title>Jetstream | Join the pre-launch waitlist</title>
     <meta
       name="description"
-      content="Jetstream helps you discover when to book, where to go, and how prices are moving across your saved destinations."
+      content="Jetstream helps travelers know when to book. Join the pre-launch waitlist for early access to the iPhone app."
     />
     <link rel="stylesheet" href="./styles.css" />
   </head>
@@ -18,39 +18,58 @@
           <span class="brand-word">Jetstream</span>
         </a>
         <nav class="topnav" aria-label="Primary">
-          <a href="#product">Product</a>
-          <a href="#features">Features</a>
+          <a href="#why">Why it wins</a>
           <a href="#preview">Preview</a>
+          <a href="#faq">FAQ</a>
         </nav>
-        <a class="cta cta-small" href="https://gojetstream.com">gojetstream.com</a>
+        <a class="cta cta-small" href="#waitlist">Join waitlist</a>
       </header>
 
       <main id="top">
         <section class="hero">
           <div class="hero-copy">
-            <p class="eyebrow">Travel pricing, reimagined for iPhone</p>
-            <h1>Book where the value is heading, not where it was.</h1>
+            <p class="eyebrow">Pre-launch waitlist now open</p>
+            <h1>Know when a flight is a move, not a maybe.</h1>
             <p class="hero-body">
-              Jetstream turns airfare into a living forecast. Track your saved destinations,
-              spot when fares are unusually low, and see where to go next through a calm,
-              Apple-native interface built for modern trip planning.
+              Jetstream turns airfare into something you can actually read. See when fares are
+              unusually low, where prices are trending, and which destinations are worth acting on
+              before everyone else catches up.
             </p>
-            <div class="hero-actions">
-              <a class="cta" href="#preview">See the product</a>
-              <a class="secondary-link" href="https://gojetstream.com">Reserve your handle at gojetstream.com</a>
-            </div>
+
+            <form class="waitlist-form glass-card" id="waitlist" novalidate>
+              <label class="field-label" for="email">Get early access</label>
+              <div class="field-row">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  inputmode="email"
+                  autocomplete="email"
+                  placeholder="you@company.com"
+                  required
+                />
+                <button class="cta submit-button" type="submit">Join pre-launch</button>
+              </div>
+              <input class="honeypot" type="text" name="company" tabindex="-1" autocomplete="off" />
+              <p class="form-meta">
+                Early users get launch updates, product previews, and first access when Jetstream
+                opens.
+              </p>
+              <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+            </form>
+
             <div class="hero-metrics">
               <div class="metric-card">
-                <span class="metric-value">5</span>
-                <span class="metric-label">Saved destinations visible at once</span>
-              </div>
-              <div class="metric-card">
-                <span class="metric-value">Live</span>
-                <span class="metric-label">Price trend cards inspired by Apple Weather</span>
+                <span class="metric-value">Forecast</span>
+                <span class="metric-label">Read whether prices are cheap, rising, or worth waiting on</span>
               </div>
               <div class="metric-card">
                 <span class="metric-value">Map</span>
-                <span class="metric-label">Compare lowest fares around the world</span>
+                <span class="metric-label">Compare saved destinations visually instead of tab by tab</span>
+              </div>
+              <div class="metric-card">
+                <span class="metric-value">Early</span>
+                <span class="metric-label">Waitlist members hear first when invites start rolling out</span>
               </div>
             </div>
           </div>
@@ -59,19 +78,29 @@
             <div class="orb orb-a"></div>
             <div class="orb orb-b"></div>
             <div class="device-stage">
-              <img src="./assets/app-preview.png" alt="Jetstream iOS app preview" />
+              <img src="./assets/app-preview.png" alt="Jetstream iPhone preview" />
+            </div>
+            <div class="floating-card deal-card">
+              <span class="floating-label">Right now</span>
+              <strong>62% below average</strong>
+              <span>Jetstream flags moments that feel obvious once you can finally see them.</span>
+            </div>
+            <div class="floating-card signal-card">
+              <span class="floating-label">Coming at launch</span>
+              <strong>Fare forecast + destination ranking</strong>
+              <span>Built to help people decide, not just browse.</span>
             </div>
           </div>
         </section>
 
-        <section class="story-strip" id="product">
+        <section class="story-strip" id="why">
           <article class="glass-panel statement">
             <p class="statement-kicker">Why Jetstream</p>
-            <h2>Weather taught people how to read uncertainty. Jetstream does the same for travel.</h2>
+            <h2>Most travel tools show search results. Jetstream shows conviction.</h2>
             <p>
-              Instead of raw flight search results, Jetstream gives travelers a forecast: where
-              prices are soft, where they are rising, and which destinations look strongest when
-              airfare, crowd level, hotels, and timing are considered together.
+              Instead of dropping you into another matrix of tabs and prices, Jetstream tells you
+              what the market is doing: where fares are soft, where they are climbing, and which
+              destinations have the strongest value right now.
             </p>
           </article>
 
@@ -79,73 +108,91 @@
             <div class="mini-route">
               <span>BOS</span>
               <span class="route-line"></span>
-              <span>LIS</span>
+              <span>CUN</span>
             </div>
-            <div class="price-callout">$452</div>
-            <p>Strong shoulder-season value. Trend slightly upward into weekend.</p>
+            <div class="price-callout">$129</div>
+            <p>Cheap now, likely rising tomorrow. Exactly the kind of moment the app is built to surface.</p>
           </article>
         </section>
 
-        <section class="feature-grid" id="features">
+        <section class="feature-grid" id="preview">
           <article class="feature-card">
             <span class="feature-number">01</span>
-            <h3>Forecast-first pricing</h3>
+            <h3>Forecast-first booking</h3>
             <p>
-              See whether fares are unusually cheap right now, how they are trending, and when to
-              move before prices jump.
+              Know whether today’s fare is unusually good and whether the curve suggests acting now
+              or waiting another beat.
             </p>
           </article>
           <article class="feature-card">
             <span class="feature-number">02</span>
-            <h3>Destination map mode</h3>
+            <h3>Destination intelligence</h3>
             <p>
-              Open a world map of your saved places and compare lowest prices spatially instead of
-              bouncing between tabs and spreadsheets.
+              Watch multiple places at once and compare them through one calm interface instead of
+              a pile of tabs and screenshots.
             </p>
           </article>
           <article class="feature-card">
             <span class="feature-number">03</span>
-            <h3>Value score clarity</h3>
+            <h3>Designed for momentum</h3>
             <p>
-              Jetstream surfaces the strongest opportunities using a combined read on airfare,
-              crowd level, timing, and local value.
+              A cinematic, Apple-native interface that keeps the signal legible while making the
+              product feel worth opening every day.
             </p>
           </article>
         </section>
 
-        <section class="preview-section" id="preview">
+        <section class="preview-section">
           <div class="preview-copy">
-            <p class="eyebrow">Product preview</p>
-            <h2>A cinematic planning surface, tuned for real decisions.</h2>
+            <p class="eyebrow">Built for launch energy</p>
+            <h2>Join now, then watch the product sharpen in public.</h2>
             <p>
-              The interface borrows the emotional clarity of Apple Weather and redirects it toward
-              booking decisions. Full-bleed destination imagery, translucent layered cards, and a
-              focused typography hierarchy keep the signal legible while preserving atmosphere.
+              The waitlist is for travelers who want an early look at a better way to read airfare.
+              We’ll share product drops, invite updates, and launch access with the people who join
+              first.
             </p>
             <ul class="bullet-list">
-              <li>Saved destination pager with map and library controls</li>
-              <li>Daily price views and multi-day forecast curves</li>
-              <li>Travel details, value scoring, and deal context in one surface</li>
+              <li>Early access invitation when the private launch opens</li>
+              <li>Product notes and feature previews while the app evolves</li>
+              <li>Priority updates as destination tracking and map mode ship</li>
             </ul>
+            <a class="secondary-link jump-link" href="#waitlist">Claim your spot on the list</a>
           </div>
 
           <div class="preview-frame">
             <div class="preview-glow"></div>
-            <img src="./assets/app-preview.png" alt="Jetstream product screen" />
+            <img src="./assets/app-preview.png" alt="Jetstream preview screen" />
           </div>
+        </section>
+
+        <section class="faq-grid" id="faq">
+          <article class="faq-card">
+            <p class="faq-question">What happens after I join?</p>
+            <p>You'll get a confirmation email, launch updates, and first notice when invites open.</p>
+          </article>
+          <article class="faq-card">
+            <p class="faq-question">Is this iPhone only?</p>
+            <p>Yes for the first release. The current preview and design system are built around iPhone.</p>
+          </article>
+          <article class="faq-card">
+            <p class="faq-question">What is Jetstream optimizing for?</p>
+            <p>Fast judgment: helping travelers know when to book and which destinations are strongest.</p>
+          </article>
         </section>
 
         <section class="cta-band">
           <div class="cta-band-copy">
-            <p class="eyebrow">Coming soon</p>
-            <h2>Own the calmest way to decide when and where to fly.</h2>
+            <p class="eyebrow">Pre-launch access</p>
+            <h2>Be on the list before Jetstream starts letting people in.</h2>
           </div>
           <div class="cta-band-actions">
-            <a class="cta" href="https://gojetstream.com">Visit gojetstream.com</a>
+            <a class="cta" href="#waitlist">Join the waitlist</a>
             <a class="secondary-link" href="mailto:hello@gojetstream.com">hello@gojetstream.com</a>
           </div>
         </section>
       </main>
     </div>
+
+    <script src="./app.js" defer></script>
   </body>
 </html>

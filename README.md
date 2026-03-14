@@ -1,20 +1,48 @@
-# Jetstream Marketing Site
+# Jetstream Pre-Launch Site
 
-Static marketing site for Jetstream, the iOS travel forecasting app.
+Static pre-launch landing page for Jetstream with a serverless waitlist signup endpoint.
 
 ## Contents
 
-- `index.html`: landing page markup
+- `index.html`: pre-launch landing page markup
 - `styles.css`: site styling
+- `app.js`: client-side waitlist form submission
+- `api/signup.js`: serverless waitlist signup endpoint
 - `assets/`: local image assets used by the page
 
-## Publishing
+## Recommended stack
 
-This repository is intended to be public and independent from the main iOS app repository.
+- Frontend: static site
+- Email delivery: Resend
+- Waitlist storage: Supabase
+- Deployment: Vercel
 
-It can be deployed with:
+The site stays mostly static, while `api/signup.js` handles:
 
-- GitHub Pages
-- Vercel
-- Netlify
-- Cloudflare Pages
+1. Validating the email address
+2. Checking Supabase for an existing signup
+3. Writing new signups into the waitlist table
+4. Sending a notification email and a confirmation email through Resend
+
+## Environment variables
+
+Copy `.env.example` to `.env.local` and set:
+
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `SUPABASE_WAITLIST_TABLE`
+- `RESEND_API_KEY`
+- `RESEND_FROM_EMAIL`
+- `WAITLIST_NOTIFY_TO_EMAIL`
+
+## Supabase table
+
+Run:
+
+- `supabase/waitlist.sql`
+
+## Launch-site clone
+
+A snapshot of the old marketing site has been copied to:
+
+- `/Users/nickholroyd/Desktop/Design Stuff/Teleport/Jetstream-launch-site`
