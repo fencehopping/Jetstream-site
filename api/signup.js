@@ -23,25 +23,12 @@ async function readRequestBody(req) {
   return req.body || {};
 }
 
-async function findExistingSignup({ supabaseUrl, supabaseKey, table, email }) {
-  const url = new URL(`${supabaseUrl}/rest/v1/${table}`);
-  url.searchParams.set("select", "id,email");
-  url.searchParams.set("email", `eq.${email}`);
-  url.searchParams.set("limit", "1");
-
-  const response = await fetch(url, {
-    headers: {
-      apikey: supabaseKey,
-      Authorization: `Bearer ${supabaseKey}`,
-    },
-  });
-
-  if (!response.ok) {
-    throw new Error("Supabase lookup failed");
-  }
-
-  const rows = await response.json();
-  return Array.isArray(rows) && rows.length > 0;
+function getSupabaseKey() {
+  return (
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.SUPABASE_PUB_API_KEY ||
+    process.env.SUPABASE_LEGACY_API_KEY
+  );
 }
 
 async function insertSignup({ supabaseUrl, supabaseKey, table, email, source }) {
@@ -60,10 +47,16 @@ async function insertSignup({ supabaseUrl, supabaseKey, table, email, source }) 
     }),
   });
 
+  if (response.status === 409) {
+    return { alreadySignedUp: true };
+  }
+
   if (!response.ok) {
     const detail = await response.text();
     throw new Error(`Supabase insert failed: ${detail}`);
   }
+
+  return { alreadySignedUp: false };
 }
 
 async function sendResendEmail({ resendApiKey, from, to, subject, html }) {
@@ -105,7 +98,7 @@ module.exports = async (req, res) => {
     }
 
     const supabaseUrl = process.env.SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    const supabaseKey = getSupabaseKey();
     const table = process.env.SUPABASE_WAITLIST_TABLE || DEFAULT_TABLE;
     const resendApiKey = process.env.RESEND_API_KEY;
     const resendFrom = process.env.RESEND_FROM_EMAIL;
@@ -123,22 +116,15 @@ module.exports = async (req, res) => {
       return response;
     }
 
-    const alreadySignedUp = await findExistingSignup({
+    const { alreadySignedUp } = await insertSignup({
       supabaseUrl,
       supabaseKey,
       table,
       email: normalizedEmail,
-    });
-
-    if (!alreadySignedUp) {
-      await insertSignup({
-        supabaseUrl,
-        supabaseKey,
-        table,
-        email: normalizedEmail,
         source,
       });
 
+    if (!alreadySignedUp) {
       await Promise.all([
         sendResendEmail({
           resendApiKey,
