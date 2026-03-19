@@ -80,6 +80,34 @@ async function sendResendEmail({ resendApiKey, from, to, subject, html }) {
   }
 }
 
+async function sendSignupEmails({ resendApiKey, resendFrom, notifyTo, email, source }) {
+  const results = await Promise.allSettled([
+    sendResendEmail({
+      resendApiKey,
+      from: resendFrom,
+      to: notifyTo,
+      subject: `New Jetstream waitlist signup: ${email}`,
+      html: `<p><strong>Email:</strong> ${email}</p><p><strong>Source:</strong> ${source}</p>`,
+    }),
+    sendResendEmail({
+      resendApiKey,
+      from: resendFrom,
+      to: email,
+      subject: "You're on the Jetstream pre-launch list",
+      html: "<p>You're on the list for Jetstream.</p><p>We'll send launch updates, previews, and early access details as they open up.</p>",
+    }),
+  ]);
+
+  const failures = results
+    .filter((result) => result.status === "rejected")
+    .map((result) => result.reason?.message || "Unknown email delivery error");
+
+  return {
+    ok: failures.length === 0,
+    failures,
+  };
+}
+
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
     const response = json(405, { error: "Method not allowed" });
@@ -110,42 +138,48 @@ module.exports = async (req, res) => {
       return response;
     }
 
-    if (!resendApiKey || !resendFrom || !notifyTo) {
-      const response = json(500, { error: "Resend is not configured." });
-      if (res) return res.status(response.statusCode).set(response.headers).send(response.body);
-      return response;
-    }
-
     const { alreadySignedUp } = await insertSignup({
       supabaseUrl,
       supabaseKey,
       table,
       email: normalizedEmail,
+      source,
+    });
+
+    let emailDelivery = {
+      ok: false,
+      skipped: true,
+      failures: [],
+    };
+
+    if (!alreadySignedUp && resendApiKey && resendFrom && notifyTo) {
+      const result = await sendSignupEmails({
+        resendApiKey,
+        resendFrom,
+        notifyTo,
+        email: normalizedEmail,
         source,
       });
-
-    if (!alreadySignedUp) {
-      await Promise.all([
-        sendResendEmail({
-          resendApiKey,
-          from: resendFrom,
-          to: notifyTo,
-          subject: `New Jetstream waitlist signup: ${normalizedEmail}`,
-          html: `<p><strong>Email:</strong> ${normalizedEmail}</p><p><strong>Source:</strong> ${source}</p>`,
-        }),
-        sendResendEmail({
-          resendApiKey,
-          from: resendFrom,
-          to: normalizedEmail,
-          subject: "You're on the Jetstream pre-launch list",
-          html: "<p>You're on the list for Jetstream.</p><p>We'll send launch updates, previews, and early access details as they open up.</p>",
-        }),
-      ]);
+      emailDelivery = {
+        ok: result.ok,
+        skipped: false,
+        failures: result.failures,
+      };
+    } else if (!alreadySignedUp) {
+      emailDelivery = {
+        ok: false,
+        skipped: true,
+        failures: ["Resend is not fully configured."],
+      };
     }
 
     const response = json(200, {
       ok: true,
       alreadySignedUp,
+      emailDelivery,
+      message: alreadySignedUp
+        ? "You're already on the waitlist. We'll be in touch."
+        : "You're on the waitlist. Check your inbox for confirmation.",
     });
     if (res) return res.status(response.statusCode).set(response.headers).send(response.body);
     return response;

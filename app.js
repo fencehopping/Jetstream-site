@@ -46,9 +46,11 @@ if (form && status && submitButton) {
         throw new Error(payload.error || "Something went wrong. Please try again.");
       }
 
-      status.textContent = payload.alreadySignedUp
-        ? "You're already on the waitlist. We'll be in touch."
-        : "You're on the waitlist. Check your inbox for confirmation.";
+      status.textContent =
+        payload.message ||
+        (payload.alreadySignedUp
+          ? "You're already on the waitlist. We'll be in touch."
+          : "You're on the waitlist. Check your inbox for confirmation.");
       form.reset();
     } catch (error) {
       form.classList.add("is-error");
