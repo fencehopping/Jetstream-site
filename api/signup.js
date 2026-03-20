@@ -44,6 +44,19 @@ function getSupabaseKey() {
   );
 }
 
+function getSupabaseKeySource() {
+  if (process.env.SUPABASE_SERVICE_ROLE_KEY) return "SUPABASE_SERVICE_ROLE_KEY";
+  if (process.env.SUPABASE_PUB_API_KEY) return "SUPABASE_PUB_API_KEY";
+  if (process.env.SUPABASE_LEGACY_API_KEY) return "SUPABASE_LEGACY_API_KEY";
+  return null;
+}
+
+function shouldExposeDebug(req) {
+  const debugFlag = String(process.env.DEBUG_SIGNUP_PIPELINE || "").toLowerCase();
+  const queryDebug = req?.query?.debug;
+  return debugFlag === "true" || queryDebug === "1" || queryDebug === "true";
+}
+
 async function insertSignup({ supabaseUrl, supabaseKey, table, email, source }) {
   const response = await fetch(`${supabaseUrl}/rest/v1/${table}`, {
     method: "POST",
@@ -138,10 +151,12 @@ module.exports = async (req, res) => {
 
     const supabaseUrl = process.env.SUPABASE_URL;
     const supabaseKey = getSupabaseKey();
+    const supabaseKeySource = getSupabaseKeySource();
     const table = process.env.SUPABASE_WAITLIST_TABLE || DEFAULT_TABLE;
     const resendApiKey = process.env.RESEND_API_KEY;
     const resendFrom = process.env.RESEND_FROM_EMAIL;
     const notifyTo = process.env.WAITLIST_NOTIFY_TO_EMAIL;
+    const exposeDebug = shouldExposeDebug(req);
 
     if (!supabaseUrl || !supabaseKey) {
       const response = json(500, { error: "Supabase is not configured." });
@@ -190,12 +205,39 @@ module.exports = async (req, res) => {
       message: alreadySignedUp
         ? "You're already on the waitlist. We'll be in touch."
         : "You're on the waitlist. Check your inbox for confirmation.",
+      ...(exposeDebug
+        ? {
+            debug: {
+              supabaseUrl,
+              supabaseKeySource,
+              table,
+              hasResendApiKey: Boolean(resendApiKey),
+              resendFrom,
+              notifyTo,
+              alreadySignedUp,
+              emailDelivery,
+            },
+          }
+        : {}),
     });
     return sendJson(res, response);
   } catch (error) {
+    const exposeDebug = shouldExposeDebug(req);
     const response = json(500, {
       error: "Unable to save your signup right now.",
       detail: error.message,
+      ...(exposeDebug
+        ? {
+            debug: {
+              supabaseUrl: process.env.SUPABASE_URL || null,
+              supabaseKeySource: getSupabaseKeySource(),
+              table: process.env.SUPABASE_WAITLIST_TABLE || DEFAULT_TABLE,
+              hasResendApiKey: Boolean(process.env.RESEND_API_KEY),
+              resendFrom: process.env.RESEND_FROM_EMAIL || null,
+              notifyTo: process.env.WAITLIST_NOTIFY_TO_EMAIL || null,
+            },
+          }
+        : {}),
     });
     return sendJson(res, response);
   }
