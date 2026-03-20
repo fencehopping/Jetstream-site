@@ -11,6 +11,19 @@ function json(statusCode, body) {
   };
 }
 
+function sendJson(res, response) {
+  if (!res) {
+    return response;
+  }
+
+  res.statusCode = response.statusCode;
+  for (const [key, value] of Object.entries(response.headers)) {
+    res.setHeader(key, value);
+  }
+  res.end(response.body);
+  return;
+}
+
 async function readRequestBody(req) {
   if (!req) return {};
   if (typeof req.body === "string") {
@@ -111,8 +124,7 @@ async function sendSignupEmails({ resendApiKey, resendFrom, notifyTo, email, sou
 module.exports = async (req, res) => {
   if (req.method !== "POST") {
     const response = json(405, { error: "Method not allowed" });
-    if (res) return res.status(response.statusCode).set(response.headers).send(response.body);
-    return response;
+    return sendJson(res, response);
   }
 
   try {
@@ -121,8 +133,7 @@ module.exports = async (req, res) => {
 
     if (!normalizedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
       const response = json(400, { error: "A valid email address is required." });
-      if (res) return res.status(response.statusCode).set(response.headers).send(response.body);
-      return response;
+      return sendJson(res, response);
     }
 
     const supabaseUrl = process.env.SUPABASE_URL;
@@ -134,8 +145,7 @@ module.exports = async (req, res) => {
 
     if (!supabaseUrl || !supabaseKey) {
       const response = json(500, { error: "Supabase is not configured." });
-      if (res) return res.status(response.statusCode).set(response.headers).send(response.body);
-      return response;
+      return sendJson(res, response);
     }
 
     const { alreadySignedUp } = await insertSignup({
@@ -181,14 +191,12 @@ module.exports = async (req, res) => {
         ? "You're already on the waitlist. We'll be in touch."
         : "You're on the waitlist. Check your inbox for confirmation.",
     });
-    if (res) return res.status(response.statusCode).set(response.headers).send(response.body);
-    return response;
+    return sendJson(res, response);
   } catch (error) {
     const response = json(500, {
       error: "Unable to save your signup right now.",
       detail: error.message,
     });
-    if (res) return res.status(response.statusCode).set(response.headers).send(response.body);
-    return response;
+    return sendJson(res, response);
   }
 };
