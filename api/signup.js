@@ -106,6 +106,65 @@ async function sendResendEmail({ resendApiKey, from, to, subject, html }) {
   }
 }
 
+function buildNotificationEmail(email, source) {
+  return `
+    <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:#0b1524;background:#f4f7fb;padding:24px;">
+      <div style="max-width:560px;margin:0 auto;background:#ffffff;border-radius:20px;padding:28px;border:1px solid #dde7f2;">
+        <p style="margin:0 0 18px;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#6f86a3;">New Jetstream waitlist signup</p>
+        <h1 style="margin:0 0 18px;font-size:28px;line-height:1.05;color:#0b1524;">Someone joined the pre-launch list.</h1>
+        <div style="padding:18px 20px;background:#f8fbff;border:1px solid #e2ebf5;border-radius:16px;">
+          <p style="margin:0 0 10px;font-size:14px;color:#4e617a;"><strong style="color:#0b1524;">Email:</strong> ${email}</p>
+          <p style="margin:0;font-size:14px;color:#4e617a;"><strong style="color:#0b1524;">Source:</strong> ${source}</p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function buildConfirmationEmail() {
+  return `
+    <div style="margin:0;padding:32px 16px;background:#eef3f9;">
+      <div style="max-width:620px;margin:0 auto;border-radius:28px;overflow:hidden;background:#071321;border:1px solid #183149;">
+        <div style="padding:18px 24px;background:linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0));border-bottom:1px solid rgba(255,255,255,0.08);">
+          <div style="display:inline-flex;align-items:center;gap:10px;">
+            <div style="width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,#8be8ff,#2a78ff);box-shadow:0 0 20px rgba(139,232,255,0.4);"></div>
+            <span style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#dff6ff;">Jetstream</span>
+          </div>
+        </div>
+        <div style="padding:44px 24px 36px;background:
+          radial-gradient(circle at top right, rgba(125,200,255,0.2), transparent 30%),
+          linear-gradient(180deg,#0b1a2d 0%,#071321 100%);
+          color:#f5fbff;">
+          <p style="margin:0 0 16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:#9fb9d6;">
+            Pre-launch waitlist
+          </p>
+          <h1 style="margin:0 0 18px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:40px;line-height:0.98;letter-spacing:-0.04em;color:#ffffff;">
+            You’re in.
+          </h1>
+          <p style="margin:0 0 24px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:17px;line-height:1.7;color:#c9d9ea;">
+            You’re officially on the Jetstream pre-launch list. We’ll send product updates, previews, and early-access details as the app gets ready to launch.
+          </p>
+          <div style="padding:20px 22px;border-radius:22px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);backdrop-filter:blur(10px);">
+            <p style="margin:0 0 12px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#8be8ff;">
+              What to expect
+            </p>
+            <ul style="margin:0;padding-left:18px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:15px;line-height:1.8;color:#d9e7f5;">
+              <li>Early looks at the product as it sharpens</li>
+              <li>Launch updates as invite access gets closer</li>
+              <li>First notice when Jetstream starts letting people in</li>
+            </ul>
+          </div>
+        </div>
+        <div style="padding:22px 24px;background:#06101c;border-top:1px solid rgba(255,255,255,0.06);">
+          <p style="margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:13px;line-height:1.7;color:#8ea4bc;">
+            Jetstream helps travelers know when a flight is actually worth booking.
+          </p>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
 async function sendSignupEmails({ resendApiKey, resendFrom, notifyTo, email, source }) {
   const results = await Promise.allSettled([
     sendResendEmail({
@@ -113,14 +172,14 @@ async function sendSignupEmails({ resendApiKey, resendFrom, notifyTo, email, sou
       from: resendFrom,
       to: notifyTo,
       subject: `New Jetstream waitlist signup: ${email}`,
-      html: `<p><strong>Email:</strong> ${email}</p><p><strong>Source:</strong> ${source}</p>`,
+      html: buildNotificationEmail(email, source),
     }),
     sendResendEmail({
       resendApiKey,
       from: resendFrom,
       to: email,
       subject: "You're on the Jetstream pre-launch list",
-      html: "<p>You're on the list for Jetstream.</p><p>We'll send launch updates, previews, and early access details as they open up.</p>",
+      html: buildConfirmationEmail(),
     }),
   ]);
 
