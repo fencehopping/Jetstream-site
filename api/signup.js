@@ -1,4 +1,5 @@
 const DEFAULT_TABLE = "waitlist_signups";
+const DEFAULT_SITE_URL = "https://www.gojetstream.com";
 
 function json(statusCode, body) {
   return {
@@ -55,6 +56,10 @@ function shouldExposeDebug(req) {
   const debugFlag = String(process.env.DEBUG_SIGNUP_PIPELINE || "").toLowerCase();
   const queryDebug = req?.query?.debug;
   return debugFlag === "true" || queryDebug === "1" || queryDebug === "true";
+}
+
+function getSiteUrl() {
+  return (process.env.SITE_URL || DEFAULT_SITE_URL).replace(/\/+$/, "");
 }
 
 async function insertSignup({ supabaseUrl, supabaseKey, table, email, source }) {
@@ -122,14 +127,21 @@ function buildNotificationEmail(email, source) {
 }
 
 function buildConfirmationEmail() {
+  const siteUrl = getSiteUrl();
+  const logoUrl = `${siteUrl}/assets/jetstreamlogowhite.png`;
+
   return `
     <div style="margin:0;padding:32px 16px;background:#eef3f9;">
       <div style="max-width:620px;margin:0 auto;border-radius:28px;overflow:hidden;background:#071321;border:1px solid #183149;">
         <div style="padding:18px 24px;background:linear-gradient(180deg,rgba(255,255,255,0.08),rgba(255,255,255,0));border-bottom:1px solid rgba(255,255,255,0.08);">
-          <div style="display:inline-flex;align-items:center;gap:10px;">
-            <div style="width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,#8be8ff,#2a78ff);box-shadow:0 0 20px rgba(139,232,255,0.4);"></div>
-            <span style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#dff6ff;">Jetstream</span>
-          </div>
+          <a href="${siteUrl}" style="display:inline-block;text-decoration:none;" target="_blank" rel="noreferrer">
+            <img
+              src="${logoUrl}"
+              alt="Jetstream"
+              width="164"
+              style="display:block;width:164px;max-width:100%;height:auto;border:0;"
+            />
+          </a>
         </div>
         <div style="padding:44px 24px 36px;background:
           radial-gradient(circle at top right, rgba(125,200,255,0.2), transparent 30%),

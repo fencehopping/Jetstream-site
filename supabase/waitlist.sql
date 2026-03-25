@@ -11,6 +11,11 @@ create index if not exists waitlist_signups_created_at_idx
   on public.waitlist_signups (created_at desc);
 
 alter table public.waitlist_signups enable row level security;
+alter table public.waitlist_signups force row level security;
+
+revoke all on public.waitlist_signups from anon;
+revoke all on public.waitlist_signups from authenticated;
+grant insert on public.waitlist_signups to anon;
 
 do $$
 begin
