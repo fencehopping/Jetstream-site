@@ -7,6 +7,9 @@ function json(statusCode, body) {
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "no-store",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
     },
     body: JSON.stringify(body),
   };
@@ -206,6 +209,11 @@ async function sendSignupEmails({ resendApiKey, resendFrom, notifyTo, email, sou
 }
 
 module.exports = async (req, res) => {
+  if (req.method === "OPTIONS") {
+    const response = json(204, {});
+    return sendJson(res, response);
+  }
+
   if (req.method !== "POST") {
     const response = json(405, { error: "Method not allowed" });
     return sendJson(res, response);

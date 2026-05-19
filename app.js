@@ -2,6 +2,14 @@ const form = document.querySelector("#waitlist");
 const status = document.querySelector("#form-status");
 const submitButton = form?.querySelector(".submit-button");
 
+function getSignupEndpoint() {
+  if (window.location.hostname === "gojetstream.com") {
+    return "https://www.gojetstream.com/api/signup";
+  }
+
+  return "/api/signup";
+}
+
 if (form && status && submitButton) {
   form.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -29,7 +37,7 @@ if (form && status && submitButton) {
     submitButton.textContent = "Joining...";
 
     try {
-      const response = await fetch("/api/signup", {
+      const response = await fetch(getSignupEndpoint(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
