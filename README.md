@@ -5,6 +5,7 @@ Static pre-launch landing page for Jetstream with a serverless waitlist signup e
 ## Contents
 
 - `index.html`: pre-launch landing page markup
+- `airport/index.html`: static QR-code landing page that redirects airport TV ad scans to the App Store campaign URL
 - `styles.css`: site styling
 - `app.js`: client-side waitlist form submission
 - `api/signup.js`: serverless waitlist signup endpoint
@@ -16,6 +17,22 @@ Static pre-launch landing page for Jetstream with a serverless waitlist signup e
 - Email delivery: Resend
 - Waitlist storage: Supabase
 - Deployment: Vercel
+
+## Airport TV QR campaign
+
+Point the airport TV ad QR code to:
+
+- `https://[domain]/airport`
+
+The `/airport` page is a static redirect page that sends users to the App Store campaign URL:
+
+- `https://apps.apple.com/app/apple-store/id6760587975?pt=128342316&ct=AirportTV_BOS_May2026&mt=8`
+
+Campaign token:
+
+- `AirportTV_BOS_May2026`
+
+Keeping the QR code pointed at `/airport` makes the QR reusable if the destination changes later.
 
 The site stays mostly static, while `api/signup.js` handles:
 
