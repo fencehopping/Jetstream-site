@@ -1,26 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Opening App Store…</title>
-    <meta name="robots" content="noindex,nofollow" />
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-TTW0QR0CXM"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
+      const GA_MEASUREMENT_ID = "G-XXXXXXXXXX";
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
-      gtag('config', 'G-TTW0QR0CXM');
+      gtag('config', GA_MEASUREMENT_ID);
     </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Opening App Store…</title>
+    <meta name="robots" content="noindex,nofollow" />
     <link
       rel="canonical"
       href="https://apps.apple.com/app/apple-store/id6760587975?pt=128342316&amp;ct=AirportTV_BOS_May2026&amp;mt=8"
     />
     <meta
       http-equiv="refresh"
-      content="0; url=https://apps.apple.com/app/apple-store/id6760587975?pt=128342316&amp;ct=AirportTV_BOS_May2026&amp;mt=8"
+      content="1; url=https://apps.apple.com/app/apple-store/id6760587975?pt=128342316&amp;ct=AirportTV_BOS_May2026&amp;mt=8"
     />
     <style>
       :root {
@@ -92,7 +93,17 @@
         "https://apps.apple.com/app/apple-store/id6760587975?pt=128342316&ct=AirportTV_BOS_May2026&mt=8";
       const AIRPORT_CAMPAIGN_NAME = "AirportTV_BOS_May2026";
 
-      window.location.replace(APP_STORE_AIRPORT_CAMPAIGN_URL);
+      if (typeof gtag === "function") {
+        gtag("event", "airport_tv_qr_scan", {
+          campaign: AIRPORT_CAMPAIGN_NAME,
+          destination: APP_STORE_AIRPORT_CAMPAIGN_URL,
+          page_path: "/airport"
+        });
+      }
+
+      window.setTimeout(() => {
+        window.location.replace(APP_STORE_AIRPORT_CAMPAIGN_URL);
+      }, 600);
     </script>
   </body>
 </html>

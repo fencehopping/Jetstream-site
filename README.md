@@ -34,6 +34,15 @@ Campaign token:
 
 Keeping the QR code pointed at `/airport` makes the QR reusable if the destination changes later.
 
+### Analytics
+
+QR scans can be approximated in GA4 by page views where the page path is `/airport`.
+The cleaner signal is the custom GA4 event named `airport_tv_qr_scan`, which fires once before the redirect.
+
+App Store installs should still be checked separately in App Store Connect under campaign
+`AirportTV_BOS_May2026`. GA4 scan counts and App Store campaign installs will not match exactly because
+they measure different steps and can be affected by blockers, network timing, attribution windows, and user drop-off.
+
 The site stays mostly static, while `api/signup.js` handles:
 
 1. Validating the email address
