@@ -576,6 +576,220 @@ img {
   color: var(--text);
 }
 
+.partner-page::before {
+  background:
+    linear-gradient(180deg, rgba(5, 12, 26, 0.2), rgba(2, 7, 15, 0.9)),
+    url("./assets/hero-bg.png") center 28% / cover no-repeat;
+}
+
+.partner-hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.86fr);
+  gap: 54px;
+  align-items: center;
+  min-height: calc(100vh - 92px);
+  padding: 70px 0 42px;
+}
+
+.partner-hero h1 {
+  margin: 0;
+  max-width: 11ch;
+  font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
+  font-size: clamp(3.1rem, 6.6vw, 6.8rem);
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+
+.partner-phone-stack {
+  position: relative;
+  min-height: 690px;
+}
+
+.partner-phone-stack img {
+  position: absolute;
+  width: min(72%, 350px);
+  filter: drop-shadow(0 28px 70px rgba(0, 0, 0, 0.46));
+}
+
+.phone-back {
+  top: 22px;
+  right: 0;
+  transform: rotate(8deg);
+  opacity: 0.82;
+}
+
+.phone-front {
+  left: 0;
+  bottom: 6px;
+  transform: rotate(-4deg);
+}
+
+.partner-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.summary-item {
+  min-height: 150px;
+  padding: 22px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.09);
+  backdrop-filter: blur(18px);
+}
+
+.summary-value {
+  display: block;
+  font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.summary-label {
+  display: block;
+  margin-top: 12px;
+  color: var(--text-soft);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.pitch-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.pitch-card-large h2,
+.deliverables-band h2,
+.creator-note h2 {
+  margin: 0;
+  font-family: "SF Pro Display", "Helvetica Neue", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.pitch-card-large p {
+  max-width: 62ch;
+  margin: 22px 0 0;
+  color: var(--text-soft);
+  font-size: 1.04rem;
+  line-height: 1.68;
+  letter-spacing: 0.01em;
+}
+
+.pitch-list-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.check-list {
+  display: grid;
+  gap: 16px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-soft);
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+.check-list li {
+  position: relative;
+  padding-left: 30px;
+}
+
+.check-list li::before {
+  content: "";
+  position: absolute;
+  top: 0.45em;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--cyan), #1f72ff);
+  box-shadow: 0 0 20px rgba(139, 232, 255, 0.36);
+}
+
+.campaign-section {
+  display: grid;
+  gap: 24px;
+  margin-top: 54px;
+}
+
+.campaign-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.campaign-card {
+  min-height: 278px;
+}
+
+.deliverables-band {
+  display: grid;
+  grid-template-columns: 0.82fr 1fr;
+  gap: 28px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 30px;
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(135deg, rgba(139, 232, 255, 0.14), rgba(255, 255, 255, 0.05)),
+    rgba(5, 16, 32, 0.6);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+}
+
+.deliverables-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.deliverables-list span {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  padding: 0 15px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  color: var(--text-soft);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.creator-note {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(260px, 0.58fr);
+  gap: 34px;
+  align-items: center;
+  margin-top: 24px;
+  padding: 30px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.creator-note p {
+  max-width: 58ch;
+  margin: 22px 0 0;
+  color: var(--text-soft);
+  line-height: 1.68;
+  letter-spacing: 0.01em;
+}
+
+.creator-note img {
+  width: min(100%, 340px);
+  justify-self: center;
+  filter: drop-shadow(0 26px 64px rgba(0, 0, 0, 0.38));
+}
+
 .legal-main {
   padding: 76px 0 34px;
 }
@@ -655,12 +869,43 @@ img {
   .preview-section,
   .feature-grid,
   .faq-grid,
-  .hero-metrics {
+  .hero-metrics,
+  .partner-hero,
+  .pitch-grid,
+  .campaign-grid,
+  .deliverables-band,
+  .creator-note {
     grid-template-columns: 1fr;
   }
 
   .topbar {
     flex-wrap: wrap;
+  }
+
+  .partner-hero {
+    min-height: auto;
+    padding-top: 56px;
+  }
+
+  .partner-hero h1 {
+    max-width: 12ch;
+  }
+
+  .partner-phone-stack {
+    min-height: 620px;
+    order: -1;
+  }
+
+  .partner-phone-stack img {
+    width: min(62%, 330px);
+  }
+
+  .phone-back {
+    right: 11%;
+  }
+
+  .phone-front {
+    left: 12%;
   }
 }
 
@@ -678,6 +923,23 @@ img {
 
   .hero h1 {
     font-size: clamp(2.7rem, 12vw, 4.4rem);
+  }
+
+  .partner-hero h1,
+  .pitch-card-large h2,
+  .deliverables-band h2,
+  .creator-note h2 {
+    font-size: clamp(2.45rem, 12vw, 3.2rem);
+    line-height: 0.98;
+  }
+
+  .partner-hero h1 {
+    max-width: 100%;
+  }
+
+  .partner-hero .hero-actions {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .field-row {
@@ -705,6 +967,41 @@ img {
     position: static;
     width: 100%;
     margin-top: 14px;
+  }
+
+  .partner-phone-stack {
+    min-height: 350px;
+    order: 0;
+  }
+
+  .partner-phone-stack img {
+    width: min(58%, 210px);
+  }
+
+  .phone-back {
+    right: 5%;
+  }
+
+  .phone-front {
+    left: 4%;
+  }
+
+  .partner-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-item,
+  .campaign-card {
+    min-height: auto;
+  }
+
+  .deliverables-band,
+  .creator-note {
+    padding: 22px;
+  }
+
+  .creator-note img {
+    width: min(100%, 270px);
   }
 
   .preview-frame {
